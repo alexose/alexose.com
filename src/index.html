@@ -1,5 +1,15 @@
 <html>
-<body>
-  <script type="module" src="./index.js"></script>
-</body>
+    <body>
+        <script>
+            // via https://www.smashingmagazine.com/2016/08/sghpa-single-page-app-hack-github-pages/
+            (function () {
+                var redirect = sessionStorage.redirect;
+                delete sessionStorage.redirect;
+                if (redirect && redirect != location.href) {
+                    history.replaceState(null, null, redirect);
+                }
+            })();
+        </script>
+        <script type="module" src="./index.js"></script>
+    </body>
 </html>
