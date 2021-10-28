@@ -1,3 +1,7 @@
+import React from 'react'
+import { render } from 'react-dom'
+window.React = React
+
 import 'preact/debug';
 import { h, render } from 'preact';
 import Styled from 'styled-components';
