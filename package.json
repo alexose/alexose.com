@@ -1,26 +1,15 @@
 {
+  "name": "alexose.com",
   "version": "1.0.0",
-  "repository": "https://github.com/alexose/alexose.github.io",
-  "author": "Alexander Ose <alex@threatswitch.com>",
-  "license": "MIT",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "parcel build src/index.html --dist-dir ./",
-    "start": "parcel src/index.html"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "alias": {
-    "react": "preact/compat",
-    "react-dom/test-utils": "preact/test-utils",
-    "react-dom": "preact/compat",
-    "react/jsx-runtime": "preact/jsx-runtime"
-  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
   "dependencies": {
-    "preact": "^10.5.15",
-    "preact-router": "^3.1.0",
-    "src": "^1.1.2",
-    "styled-components": "3.4.9"
-  },
-  "devDependencies": {
-    "parcel": "^2.0.0",
-    "parcel-bundler": "^1.12.5"
+    "node-fetch": "^3.0.0"
   }
 }
