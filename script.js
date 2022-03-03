@@ -1,5 +1,20 @@
-function Menu(props) {
-    return <pre>{JSON.stringify(props.json, null, 2)}</pre>;
+function Menu({json}) {
+    if (!json.length) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div>
+            {json.map(d => {
+                return (
+                    <div key={d.name}>
+                        <h3>{d.name}</h3>
+                        <div className="readme" dangerouslySetInnerHTML={{__html: d.readme}}></div>
+                    </div>
+                );
+            })}
+        </div>
+    );
 }
 
 class App extends React.Component {
@@ -9,7 +24,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api.github.com/users/alexose/repos")
+        fetch("./repos.json")
             .then(response => response.json())
             .then(json => process(json))
             .then(json =>
@@ -22,16 +37,16 @@ class App extends React.Component {
             );
 
         function process(json) {
-            return json.filter(d => d.has_pages);
+            return json.filter(d => !d.fork);
         }
     }
 
     render() {
-        console.log(this.state);
+        const {json} = this.state;
         return (
             <div>
                 <h1>alexosedotdom</h1>
-                <Menu json={this.state.json} />
+                <Menu json={json} />
             </div>
         );
     }

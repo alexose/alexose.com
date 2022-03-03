@@ -1,27 +1,46 @@
-import http from "http";
+import fs from "fs";
 import fetch from "node-fetch";
 
-let json = "";
-
-const requestListener = function (req, res) {
-    res.setHeader("Content-Type", "application/json");
-    res.writeHead(200);
-    res.end(JSON.stringify(json, null, 2));
-};
-
-const server = http.createServer(requestListener);
-server.listen(8088);
+// set up tokens via https://github.com/settings/tokens
+import {username, token} from "./config.js";
 
 // Check to see which repos are available
-const {username, token} = process.env;
-fetch("https://api.github.com/users/alexose/repos", {
+fetch("https://api.github.com/users/alexose/repos?per_page=100", {
     headers: {
-        Authorization: "Basic " + `${username}:${token}`.toString("base64"),
+        Authorization: "Basic " + Buffer.from(`${username}:${token}`).toString("base64"),
     },
 })
     .then(response => response.json())
-    .then(_json => (json = _json));
+    .then(process);
 
-// Do we have this in /experiments?
+async function process(arr) {
+    if (arr.length === 100) {
+        console.error("TODO: more than 100 repos");
+        sys.exit(1);
+    }
 
-// How about a non-experiment repo?
+    // Filter out forks
+    const repos = arr.filter(d => !d.fork);
+
+    // Get READMEs
+    const names = repos.map(d => d.name);
+    for (const i in names) {
+        const name = names[i];
+        const url = `https://api.github.com/repos/alexose/${name}/readme`;
+        const res = await fetch(url, {
+            headers: {
+                Accept: "application/vnd.github.html+json",
+                Authorization: "Basic " + Buffer.from(`${username}:${token}`).toString("base64"),
+            },
+        });
+        const body = await res.text();
+
+        if (res.status === 200) repos[i].readme = body;
+        console.log(`${res.status === 200 ? "Found" : "No"} readme for ${name}... (${i} / ${names.length})`);
+
+        await new Promise(r => setTimeout(r, 1000));
+    }
+
+    // Write to file
+    fs.writeFileSync("./repos.json", JSON.stringify(repos, null, 2));
+}
