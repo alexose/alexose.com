@@ -19,7 +19,7 @@
             text-align: center;
         }
         .box {
-            width: 33%;
+            width: 50%;
         }
         textarea.box {
             height: 50vh;
@@ -40,13 +40,11 @@
         <h2>Using <a href="https://github.com/siara-cc/Unishox_JS">Unishox2</a></h2>
         <div class="wrapper centered">
             <div class="box">Original text</div>
-            <div class="box">Stripped text</div>
             <div class="box">Binary output</div>
         </div>
 
         <div class="wrapper">
             <textarea class="box" id="left" placeholder="Type text here..."></textarea>
-            <textarea class="box" id="middle"></textarea>
             <textarea class="box" id="right"></textarea>
         </div>
         <button id="generate">Generate Random Data</button>
@@ -1495,7 +1493,6 @@
     </script>
     <script>
         const left = document.getElementById("left");
-        const middle = document.getElementById("middle");
         const right = document.getElementById("right");
         const readout = document.getElementById("readout");
         const generate = document.getElementById("generate");
@@ -1516,17 +1513,11 @@
 
         const arr = [].concat(alphabet.split("")).concat(numbers.split("")).concat(symbols.split(""));
 
-        left.onkeypress = e => {
-            const values = e.target.value.split("");
-            // Strip everything that isn't alphanum, period, or space
-            const stripped = values.filter(d => arr.includes(d));
-            // middle.value = stripped.join("");
-            middle.value = values.join("");
-            updateResult();
-        };
+        left.onkeypress = updateResult;
+        left.onchange = updateResult;
 
         function updateResult() {
-            const str = middle.value;
+            const str = left.value;
             const compressed = compress(str);
             const result = Array.from(compressed).filter(d => d !== 0);
             const readable = new TextDecoder().decode(compressed);
