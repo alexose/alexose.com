@@ -3,6 +3,15 @@
         <title>Bytesmoosh!</title>
     </head>
     <style>
+        h1 {
+            margin-top: 40px;
+        }
+        h1,
+        h2 {
+            font-size: 26px;
+            margin-left: 20px;
+            color: #444;
+        }
         .wrapper {
             display: flex;
         }
@@ -22,8 +31,13 @@
             text-align: center;
             margin: 20px;
         }
+        #generate {
+            margin: 10px 20px;
+        }
     </style>
     <body>
+        <h1>Short-string compression experiments</h1>
+        <h2>Using <a href="https://github.com/siara-cc/Unishox_JS">Unishox2</a></h2>
         <div class="wrapper centered">
             <div class="box">Original text</div>
             <div class="box">Stripped text</div>
@@ -35,6 +49,7 @@
             <textarea class="box" id="middle"></textarea>
             <textarea class="box" id="right"></textarea>
         </div>
+        <button id="generate">Generate Random Data</button>
         <div id="readout" />
     </body>
     <script>
@@ -1483,6 +1498,17 @@
         const middle = document.getElementById("middle");
         const right = document.getElementById("right");
         const readout = document.getElementById("readout");
+        const generate = document.getElementById("generate");
+
+        generate.onclick = () => {
+            left.value = left.value + getRandomInRange(-180, 180, 6) + "," + getRandomInRange(-180, 180, 6) + "\n";
+            left.dispatchEvent(new KeyboardEvent("keypress"));
+
+            function getRandomInRange(from, to, fixed) {
+                return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+                // .toFixed() returns string, so ' * 1' is a trick to convert to number
+            }
+        };
 
         const alphabet = "bcdfghjklmnpqrstvy";
         const numbers = "0123456789";
