@@ -42,5 +42,5 @@ async function process(arr) {
     }
 
     // Write to file
-    fs.writeFileSync("./repos.json", JSON.stringify(repos, null, 2));
+    fs.writeFileSync("docs/repos.json", JSON.stringify(repos, null, 2));
 }
