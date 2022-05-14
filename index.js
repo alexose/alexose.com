@@ -41,6 +41,15 @@ async function process(arr) {
         await new Promise(r => setTimeout(r, 1000));
     }
 
+    // Sort
+    const sorted = repos.sort((a, b) => {
+        const d1 = new Date(a.updated_at);
+        const d2 = new Date(b.updated_at);
+        if (d1 > d2) return 1;
+        if (d2 < d1) return -1;
+        return 0;
+    });
+
     // Write to file
-    fs.writeFileSync("docs/repos.json", JSON.stringify(repos, null, 2));
+    fs.writeFileSync("docs/repos.json", JSON.stringify(sorted, null, 2));
 }

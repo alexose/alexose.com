@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
+import repos from "./repos.json";
+import './App.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -9,21 +11,22 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch("./repos.json")
-            .then(response => response.json())
-            .then(json => process(json))
-            .then(json =>
-                this.setState(state => {
-                    return {
-                        ...state,
-                        json,
-                    };
-                })
-            );
+        this.setState(state => {
+            const sorted = repos.slice().sort((a, b) => {
+                const d1 = new Date(a.updated_at);
+                const d2 = new Date(b.updated_at);
+                if (d1 < d2) return 1;
+                if (d1 > d2) return -1;
+                return 0;
+            });
 
-        function process(json) {
-            return json.filter(d => !d.fork);
-        }
+            console.log(sorted);
+
+            return {
+                ...state,
+                json: sorted,
+            };
+        });
     }
 
     render() {
