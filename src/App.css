@@ -1,6 +1,10 @@
 body {
 }
 
+a {
+    color: #ccc;
+}
+
 h1 {
     letter-spacing: 3;
 }
@@ -32,6 +36,11 @@ h1 {
 .readme {
     margin-left: 20px;
     font-size: 16px;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
 }
 
 .readme h1 {

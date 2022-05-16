@@ -59,7 +59,9 @@ function Menu({json}) {
             {json.map(d => {
                 return (
                     <div className="repo" key={d.name}>
-                        <h2>{d.name}</h2>
+                        <h2>
+                            <a href={d.html_url}>{d.name}</a>
+                        </h2>
                         <time>{formatDate(d.last_commit_at)}</time>
                         <div className="readme" dangerouslySetInnerHTML={{__html: d.readme}}></div>
                     </div>
