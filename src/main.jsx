@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import repos from "./repos.json";
-import './App.css';
+import "./App.css";
 
 class App extends React.Component {
     constructor(props) {
@@ -13,8 +13,8 @@ class App extends React.Component {
     componentDidMount() {
         this.setState(state => {
             const sorted = repos.slice().sort((a, b) => {
-                const d1 = new Date(a.updated_at);
-                const d2 = new Date(b.updated_at);
+                const d1 = new Date(a.last_commit_at);
+                const d2 = new Date(b.last_commit_at);
                 if (d1 < d2) return 1;
                 if (d1 > d2) return -1;
                 return 0;
@@ -34,7 +34,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <h1>alexosedotdom</h1>
+                    <h1>alexosedotcom</h1>
                 </div>
                 <Routes>
                     <Route path="/weather" element={<h2>Weather!</h2>} />
@@ -45,17 +45,22 @@ class App extends React.Component {
     }
 }
 
+function formatDate(date) {
+    return new Date(date).toLocaleDateString();
+}
+
 function Menu({json}) {
     if (!json.length) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div>
+        <div className="repo-list">
             {json.map(d => {
                 return (
-                    <div key={d.name}>
-                        <h3>{d.name}</h3>
+                    <div className="repo" key={d.name}>
+                        <h2>{d.name}</h2>
+                        <time>{formatDate(d.last_commit_at)}</time>
                         <div className="readme" dangerouslySetInnerHTML={{__html: d.readme}}></div>
                     </div>
                 );
