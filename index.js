@@ -3,12 +3,16 @@ import fetch from "node-fetch";
 import process from "process";
 
 // set up tokens via https://github.com/settings/tokens
+let username;
+let token;
 try {
-    import {username, token} from "./config.js";
+    const config = import("./config.js");
+    username = config.username;
+    token = config.token;
 } catch (e) {
     console.log("Couldn't find config.js.  Trying environment variables instead.");
-    let username = process.env.USERNAME;
-    let token = process.env.TOKEN;
+    username = process.env.USERNAME;
+    token = process.env.TOKEN;
     if (!username || !token) {
         console.log("Couldn't find credentials.");
     }
