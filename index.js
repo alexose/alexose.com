@@ -1,5 +1,6 @@
 import fs from "fs";
 import fetch from "node-fetch";
+import process from "process";
 
 // set up tokens via https://github.com/settings/tokens
 import {username, token} from "./config.js";
@@ -11,12 +12,17 @@ fetch("https://api.github.com/users/alexose/repos?per_page=100", {
     },
 })
     .then(response => response.json())
-    .then(process);
+    .then(go);
 
-async function process(arr) {
+async function go(arr) {
+    if (!Array.isArray(arr)) {
+        console.error(arr);
+        process.exit(1);
+    }
+
     if (arr.length === 100) {
         console.error("TODO: more than 100 repos");
-        sys.exit(1);
+        process.exit(1);
     }
 
     // Filter out forks
