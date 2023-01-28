@@ -6,7 +6,7 @@ import process from "process";
 let username;
 let token;
 try {
-    const config = import("./config.js");
+    const config = JSON.parse(fs.readFileSync('./config.js')); 
     username = config.username;
     token = config.token;
 } catch (e) {
