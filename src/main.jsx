@@ -20,8 +20,6 @@ class App extends React.Component {
                 return 0;
             });
 
-            console.log(sorted);
-
             return {
                 ...state,
                 json: sorted,
