@@ -34,8 +34,8 @@ jobs:
               run: npm install
             - name: Run build script
               with:
-                  USERNAME: secrets.USERNAME
-                  TOKEN: secrets.TOKEN
+                  USERNAME: ${{ secrets.USERNAME }}
+                  TOKEN: ${{ secrets.TOKEN }}
               run: USERNAME=%USERNAME% TOKEN=%TOKEN% npm run build
             - name: Setup Pages
               uses: actions/configure-pages@v3
