@@ -23,6 +23,7 @@ concurrency:
 jobs:
     build:
         runs-on: ubuntu-latest
+        environment: deploy
         steps:
             - name: Checkout
               uses: actions/checkout@v3
@@ -33,11 +34,10 @@ jobs:
             - name: Install project
               run: npm install
             - name: Run build script
-              shell: bash
+              run: npm run build
               env:
                   USERNAME: ${{ secrets.USERNAME }}
                   TOKEN: ${{ secrets.TOKEN }}
-              run: npm run build
             - name: Setup Pages
               uses: actions/configure-pages@v3
             - name: Build with Jekyll
