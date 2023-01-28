@@ -32,7 +32,7 @@ jobs:
             - name: Install project
               run: npm install
             - name: Run build script
-              run: npm run build
+              run: USERNAME=${{ secrets.USERNAME }} TOKEN=${{ secrets.TOKEN }} npm run build
 
     build:
         runs-on: ubuntu-latest
