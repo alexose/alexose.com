@@ -3,7 +3,16 @@ import fetch from "node-fetch";
 import process from "process";
 
 // set up tokens via https://github.com/settings/tokens
-import {username, token} from "./config.js";
+try {
+    import {username, token} from "./config.js";
+} catch (e) {
+    console.log("Couldn't find config.js.  Trying environment variables instead.");
+    let username = process.env.USERNAME;
+    let token = process.env.TOKEN;
+    if (!username || !token) {
+        console.log("Couldn't find credentials.");
+    }
+}
 
 // Check to see which repos are available
 fetch("https://api.github.com/users/alexose/repos?per_page=100", {
