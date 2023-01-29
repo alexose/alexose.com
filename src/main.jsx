@@ -19,7 +19,6 @@ class App extends React.Component {
                 if (d1 > d2) return -1;
                 return 0;
             });
-
             console.log(sorted);
             return {
                 ...state,
